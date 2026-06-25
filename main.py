@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from ddgs import DDGS
+from duckduckgo_search import DDGS  # правильный импорт
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -101,10 +101,11 @@ def ask():
     return jsonify(result)
 
 if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))  # Берём порт из переменной Render
     print("=" * 50)
     print("🦆 ИИ-помощник с интернетом")
     print("=" * 50)
-    print("🌐 Откройте в браузере: http://127.0.0.1:5000")
+    print(f"🌐 Откройте в браузере: http://0.0.0.0:{port}")
     print("💡 Нажмите Ctrl+C для остановки")
     print("=" * 50)
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=port, debug=False)  # debug=False для продакшена
